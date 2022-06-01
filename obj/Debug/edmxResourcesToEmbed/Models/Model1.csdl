@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NEGOCIOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="DNI_CLIENTE" />
+    </Key>
+    <Property Name="DNI_CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="NOM_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DIR_CLIENTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="TEL_CLIENTE" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PRODUCTO">
+    <Key>
+      <PropertyRef Name="REF_PRODUCTO" />
+    </Key>
+    <Property Name="REF_PRODUCTO" Type="Int32" Nullable="false" />
+    <Property Name="NOM_PRODUCTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FECHA_INGRESO" Type="DateTime" Precision="0" />
+    <Property Name="CANTIDAD" Type="Int32" />
+    <Property Name="PRECIO_COMPRA" Type="Double" />
+    <Property Name="PRECIO_VENTA" Type="Double" />
+    <Property Name="DNI_PROVEEDOR" Type="Int32" />
+    <NavigationProperty Name="PROVEEDOR" Relationship="Self.FKP" FromRole="PRODUCTO" ToRole="PROVEEDOR" />
+    <NavigationProperty Name="VENTA" Relationship="Self.FKPROD" FromRole="PRODUCTO" ToRole="VENTA" />
+  </EntityType>
+  <EntityType Name="PROVEEDOR">
+    <Key>
+      <PropertyRef Name="DNI_PROVEEDOR" />
+    </Key>
+    <Property Name="DNI_PROVEEDOR" Type="Int32" Nullable="false" />
+    <Property Name="NOM_PROVEEDOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DIR_PROVEEDOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="TEL_PROVEEDOR" Type="Int32" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FKP" FromRole="PROVEEDOR" ToRole="PRODUCTO" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="VENTA">
+    <Key>
+      <PropertyRef Name="NUM_VENTA" />
+    </Key>
+    <Property Name="NUM_VENTA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REF_PRODUCTO1" Type="Int32" />
+    <Property Name="MEDIO_PAGO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FKPROD" FromRole="VENTA" ToRole="PRODUCTO" />
+  </EntityType>
+  <Association Name="FKP">
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROVEEDOR">
+        <PropertyRef Name="DNI_PROVEEDOR" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="DNI_PROVEEDOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKPROD">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+    <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="REF_PRODUCTO" />
+      </Principal>
+      <Dependent Role="VENTA">
+        <PropertyRef Name="REF_PRODUCTO1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NEGOCIOEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
+    <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+    <EntitySet Name="PROVEEDOR" EntityType="Self.PROVEEDOR" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="VENTA" EntityType="Self.VENTA" />
+    <AssociationSet Name="FKP" Association="Self.FKP">
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FKPROD" Association="Self.FKPROD">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="VENTA" EntitySet="VENTA" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

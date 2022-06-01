@@ -1,0 +1,42 @@
+﻿@model PROYECTOMVC.Models.CLIENTE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CLIENTE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOM_CLIENTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOM_CLIENTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIR_CLIENTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIR_CLIENTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEL_CLIENTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEL_CLIENTE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DNI_CLIENTE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<PROYECTOMVC.Models.PRODUCTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NOM_PRODUCTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA_INGRESO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CANTIDAD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRECIO_COMPRA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRECIO_VENTA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PROVEEDOR.NOM_PROVEEDOR)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NOM_PRODUCTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA_INGRESO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CANTIDAD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRECIO_COMPRA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRECIO_VENTA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PROVEEDOR.NOM_PROVEEDOR)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.REF_PRODUCTO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.REF_PRODUCTO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.REF_PRODUCTO })
+        </td>
+    </tr>
+}
+
+</table>

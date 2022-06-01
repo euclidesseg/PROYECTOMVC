@@ -1,0 +1,66 @@
+﻿@model PROYECTOMVC.Models.PRODUCTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PRODUCTO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOM_PRODUCTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOM_PRODUCTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA_INGRESO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA_INGRESO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CANTIDAD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CANTIDAD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRECIO_COMPRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRECIO_COMPRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRECIO_VENTA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRECIO_VENTA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PROVEEDOR.NOM_PROVEEDOR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PROVEEDOR.NOM_PROVEEDOR)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.REF_PRODUCTO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

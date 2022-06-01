@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NEGOCIOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="DNI_CLIENTE" />
+    </Key>
+    <Property Name="DNI_CLIENTE" Type="int" Nullable="false" />
+    <Property Name="NOM_CLIENTE" Type="varchar" MaxLength="50" />
+    <Property Name="DIR_CLIENTE" Type="varchar" MaxLength="30" />
+    <Property Name="TEL_CLIENTE" Type="int" />
+  </EntityType>
+  <EntityType Name="PRODUCTO">
+    <Key>
+      <PropertyRef Name="REF_PRODUCTO" />
+    </Key>
+    <Property Name="REF_PRODUCTO" Type="int" Nullable="false" />
+    <Property Name="NOM_PRODUCTO" Type="varchar" MaxLength="50" />
+    <Property Name="FECHA_INGRESO" Type="date" />
+    <Property Name="CANTIDAD" Type="int" />
+    <Property Name="PRECIO_COMPRA" Type="float" />
+    <Property Name="PRECIO_VENTA" Type="float" />
+    <Property Name="DNI_PROVEEDOR" Type="int" />
+  </EntityType>
+  <EntityType Name="PROVEEDOR">
+    <Key>
+      <PropertyRef Name="DNI_PROVEEDOR" />
+    </Key>
+    <Property Name="DNI_PROVEEDOR" Type="int" Nullable="false" />
+    <Property Name="NOM_PROVEEDOR" Type="varchar" MaxLength="30" />
+    <Property Name="DIR_PROVEEDOR" Type="varchar" MaxLength="30" />
+    <Property Name="TEL_PROVEEDOR" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="VENTA">
+    <Key>
+      <PropertyRef Name="NUM_VENTA" />
+    </Key>
+    <Property Name="NUM_VENTA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="REF_PRODUCTO1" Type="int" />
+    <Property Name="MEDIO_PAGO" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FKP">
+    <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROVEEDOR">
+        <PropertyRef Name="DNI_PROVEEDOR" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="DNI_PROVEEDOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKPROD">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+    <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="REF_PRODUCTO" />
+      </Principal>
+      <Dependent Role="VENTA">
+        <PropertyRef Name="REF_PRODUCTO1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NEGOCIOModelStoreContainer">
+    <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROVEEDOR" EntityType="Self.PROVEEDOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VENTA" EntityType="Self.VENTA" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FKP" Association="Self.FKP">
+      <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FKPROD" Association="Self.FKPROD">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="VENTA" EntitySet="VENTA" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
